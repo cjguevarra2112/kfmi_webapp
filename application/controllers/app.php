@@ -52,7 +52,7 @@ class App extends CI_Controller {
     }
     
     // Checks for login credentials 
-    public function login_validation () {
+    public function login_validation () { 
 
         // Set up validation rules
         $this->form_validation->set_rules('uname', 'Username', 'required|xss_clean|callback_validate_credentials');
@@ -84,7 +84,7 @@ class App extends CI_Controller {
             
              $data = array(
                 'title'  => 'Login',
-                'header' => 'KFMI Login'
+                'header' => 'KFMI Login' 
             );
             $this->load->view('signin', $data);
             
@@ -107,6 +107,7 @@ class App extends CI_Controller {
     }
 
     // Callback for checking login credentials
+    // Uses model method can_log_in()
     public function validate_credentials () {
         if ($this->app_model->can_log_in()) {
             return true;
