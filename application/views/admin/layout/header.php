@@ -55,13 +55,13 @@
                             <a  href="<?php echo base_url('admin/categories'); ?>"><i class="fa fa-qrcode fa-3x"></i> Manage Categories </a>
                         </li>
                                <li  >
-                            <a  href="chart.html"><i class="fa fa-bar-chart-o fa-3x"></i> Manage Accounts </a>
+                            <a  href="<?php echo base_url('admin/accounts'); ?>"><i class="fa fa-bar-chart-o fa-3x"></i> Manage Accounts </a>
                         </li>	
                           <li  >
-                            <a  href="table.html"><i class="fa fa-table fa-3x"></i> Free menu </a>
+                        <a  href="<?php echo base_url('admin/logs'); ?>"><i class="fa fa-table fa-3x"></i> View Logs </a>
                         </li>
                         <li  >
-                            <a  href="form.html"><i class="fa fa-edit fa-3x"></i> Purchase Cart </a>
+                            <a  href="<?php echo base_url('admin/cart'); ?>"><i class="fa fa-edit fa-3x"></i> Purchase Cart </a>
                         </li>				
 
 

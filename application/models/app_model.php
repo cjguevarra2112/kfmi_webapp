@@ -130,7 +130,7 @@ class App_model extends CI_Model {
         return $password;
     }
     
-    
+    /*
     // CATEGORIES management
     
     // Fetches all or several categories base on the query string
@@ -147,5 +147,6 @@ class App_model extends CI_Model {
             return $query;
         }
     }
+    */
     
 }

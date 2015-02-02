@@ -22,7 +22,7 @@ class Admin extends CI_Controller {
                 'heading'    => 'Welcome, ' . $role,
                 'subheading' => 'This is the admin panel for KFMI inventory app. You currently have no activities yet.',
                 'role'       => $role
-            );
+        );
         
     }
     
@@ -41,29 +41,34 @@ class Admin extends CI_Controller {
         }
     }
     
+
     // Redirect to item management module
     public function items () {
-        echo "<h1> Item management </h1>";
+        // echo "<h1> Item management </h1>";
+        redirect('admin_panel/items');
     }
     
     // Redirect to categories management module
     public function categories () {
-        echo "<h1> Categories management </h1>";
+        redirect('admin_panel/categories');
     }
     
     // Redirect to accounts management module
     public function accounts () {
-        echo "<h1> Accounts management </h1>";
+        // echo "<h1> Accounts management </h1>";
+        redirect('admin_panel/accounts');
     }
     
     // Redirect to view logs module 
     public function logs () {
-        echo "<h1> View Logs </h1>";
+        // echo "<h1> View Logs </h1>";
+        redirect('admin_panel/logs');
     }
     
     // Redirect to purchase cart module
     public function cart () {
-        echo "<h1> Purchase Cart </h1>";
+        // echo "<h1> Purchase Cart </h1>";
+        redirect('admin_panel/cart');
     }
     
     

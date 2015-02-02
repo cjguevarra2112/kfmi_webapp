@@ -40,7 +40,7 @@
 
 $route['default_controller'] = "app";
 $route['admin'] = "admin_panel/admin";
-$route['admin/(:any)'] = "admin_panel/admin/$1";
+$route['admin/(:any)'] = "admin_panel/$1";
 $route['404_override'] = '';
 
 

@@ -1,6 +1,7 @@
 <?php $this->load->view('admin/layout/header'); ?>
 <h1> Category management </h1>
 
+
 <div class="panel panel-default">
     <div class="panel-heading">
         <form class="form-inline clearfix" >
