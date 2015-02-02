@@ -26,10 +26,10 @@ class App extends CI_Controller {
 	}
     
     
-    // Members only page
+    // Members only page (admin page)
     public function members() {
         if ($this->session->userdata('is_logged_in')) {
-            redirect('admin/');
+            redirect('admin_panel/admin');
         } else {
             redirect('app/');
         }
@@ -88,7 +88,7 @@ class App extends CI_Controller {
             );
             $this->load->view('signin', $data);
             
-            // redirect('app/login');
+            // redirect('app/login_validation');
         }
     }
     
@@ -97,7 +97,8 @@ class App extends CI_Controller {
         if ($this->session->userdata('is_logged_in')) {
             
             $data = array(
-                'user' => $this->session->userdata('user')
+                'user' => $this->session->userdata('user'),
+                'title' => 'Logout'
             );
             $this->session->sess_destroy();
             $this->load->view('admin/logout_view', $data);

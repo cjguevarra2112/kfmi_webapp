@@ -58,7 +58,7 @@
                             <a  href="chart.html"><i class="fa fa-bar-chart-o fa-3x"></i> Manage Accounts </a>
                         </li>	
                           <li  >
-                            <a  href="table.html"><i class="fa fa-table fa-3x"></i> View Logs </a>
+                            <a  href="table.html"><i class="fa fa-table fa-3x"></i> Free menu </a>
                         </li>
                         <li  >
                             <a  href="form.html"><i class="fa fa-edit fa-3x"></i> Purchase Cart </a>
@@ -69,7 +69,7 @@
                             <a href="#"><i class="fa fa-sitemap fa-3x"></i> Multi-Level Dropdown<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a href="#">Second Level Link</a>
+                                    <a href="#">Purchases</a>
                                 </li>
                                 <li>
                                     <a href="#">Second Level Link</a>

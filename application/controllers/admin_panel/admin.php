@@ -2,8 +2,6 @@
 
 class Admin extends CI_Controller {
     
-    private $data = array();
-    
     // Default constructor
     public function __construct () {
         parent::__construct();
@@ -35,24 +33,65 @@ class Admin extends CI_Controller {
     
     
     public function home() {
-        if ($this->session->userdata('is_logged_in') && $this->session->userdata('role') == 'Admin') {
+        //  && $this->session->userdata('role') == 'Admin'
+        if ($this->session->userdata('is_logged_in')) {
             $this->load->view('admin/home', $this->data);
         } else {
             redirect('app/');
         }
     }
     
-    // Items page
+    // Redirect to item management module
     public function items () {
-        if ($this->session->userdata('is_logged_in') && $this->session->userdata('role') == 'Admin') {
+        echo "<h1> Item management </h1>";
+    }
+    
+    // Redirect to categories management module
+    public function categories () {
+        echo "<h1> Categories management </h1>";
+    }
+    
+    // Redirect to accounts management module
+    public function accounts () {
+        echo "<h1> Accounts management </h1>";
+    }
+    
+    // Redirect to view logs module 
+    public function logs () {
+        echo "<h1> View Logs </h1>";
+    }
+    
+    // Redirect to purchase cart module
+    public function cart () {
+        echo "<h1> Purchase Cart </h1>";
+    }
+    
+    
+    
+    
+    // Items page
+    /*
+    public function items () {
+        
+        // Redirect to items controller
+        
+        // && $this->session->userdata('role') == 'Admin'
+        if ($this->session->userdata('is_logged_in')) {
             $this->load->view('admin/items', $this->data);
         } else {
             redirect('app/');
         }
     }
+    */
     
-    // Categories page 
+
+    // Categories page
+    /*
     public function categories () {
+        
+        // This should redirect to categories controller
+        
+        
         if ($this->session->userdata('is_logged_in') ) {
            
             // Load pagination library
@@ -78,6 +117,6 @@ class Admin extends CI_Controller {
             redirect('app/');
         }
     }
-    
-    
+    */
+
 }
