@@ -29,7 +29,7 @@
                             <td> <?php echo $row->name; ?> </td>
                             <td>
                                 <center>
-                                    <button style="display:inline;" class="btn btn-primary" data-toggle="modal" data-target="#editModal_<?php echo $row->id; ?>"> Update </button>
+                                    <button style="display:inline;" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#editModal_<?php echo $row->id; ?>"> <span class="glyphicon glyphicon-pencil"> </span> </button>
 
                                     <!-- Modal for Edit category -->
                                     <div class="modal fade" id="editModal_<?php echo $row->id; ?>" tabindex="-1" role="dialog" aria-hidden="true">
@@ -46,18 +46,19 @@
 
                                                 <!-- Modal BODY -->
                                                 <div class="modal-body">
-                                                    <?php echo form_open('admin/Categories/editCategory'); ?>
+                                                    <?php echo form_open('admin/categories/editCategory'); ?>
                                                         <div class="form-group">
                                                             <label for="new-category" class="control-label"> New category name: </label>
-                                                            <input type="text" class="form-control" name="new_category_name" id="new-category" value="<?php echo $row->name; ?>"/>
+                                                            <input type="hidden" name="categoryId" value="<?php echo $row->id; ?>" />
+                                                            <input type="text" class="form-control" name="newCategoryName" id="new-category" value="<?php echo $row->name; ?>" required/>
                                                         </div>
-                                                    </form>
                                                 </div>
 
                                                 <!-- Modal FOOTER -->
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-default" data-dismiss="modal"> Close </button>
-                                                    <input type="text" class="btn btn-primary" value="Update"/>
+                                                    <button type="submit" class="btn btn-primary"> Update </button>
+                                                    </form>
                                                 </div>
                                             </div>
                                         </div>
@@ -69,7 +70,7 @@
                                     
                                     ?>
                                     <input type="hidden" name="categId" value="<?php echo $row->id; ?>" />
-                                    <input type="submit" name="action" class="btn btn-danger" value="Delete" />
+                                    <button type="submit" name="action" class="btn btn-danger btn-lg"> <span class="glyphicon glyphicon-trash"></span></button>
                                     </form>
                                 </center>
                             </td>

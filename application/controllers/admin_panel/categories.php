@@ -66,13 +66,26 @@ class Categories extends CI_Controller {
     public function  doAction() {
         $action = $this->input->post('action');
         $categId = $this->input->post('categId');
-        
         echo "You want to " . $action . " a category with an id of " . $categId;
     }
     
     // Edit a category
     public function editCategory () {
-        $category_name = $this->input->post('new_category_name');
-        echo "You've successfully edited " . $category_name;
+        $this->form_validation->set_rules('newCategoryName', 'Category name', 'required|xss_clean');
+        
+        if ($this->form_validation->run()) {
+            $categoryName = $this->input->post('newCategoryName');
+            $categoryId   = $this->input->post('categoryId');
+            
+            $this->db->where('id', $categoryId);
+            $this->db->update('category', array('name' => $categoryName));
+            
+            // View success page!
+            $this->data['message'] = 'update a category';
+            $this->data['back']    = base_url('admin/categories');
+            
+            $this->load->view('other/success', $this->data);
+        }
+        
     }
 }
