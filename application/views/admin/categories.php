@@ -19,17 +19,65 @@
                     <tr>
                         <th> Id </th>
                         <th> Category name </th>
+                        <th> Action </th>
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach ($categs->result() as $row): ?>
+                    <?php foreach ($query->result() as $row): ?>
                     <tr>
-                        <td> <?php echo $row->id; ?> </td>
-                        <td> <?php echo $row->name; ?> </td>
+                            <td> <?php echo $row->id; ?> </td>
+                            <td> <?php echo $row->name; ?> </td>
+                            <td>
+                                <center>
+                                    <button style="display:inline;" class="btn btn-primary" data-toggle="modal" data-target="#editModal_<?php echo $row->id; ?>"> Update </button>
+
+                                    <!-- Modal for Edit category -->
+                                    <div class="modal fade" id="editModal_<?php echo $row->id; ?>" tabindex="-1" role="dialog" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+
+                                                <!-- Modal HEADER -->
+                                                <div class="modal-header">
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true"> &times; </span>
+                                                    </button>
+                                                    <h4 class="modal-title" id="editModalLabel"> Edit category </h4>
+                                                </div>
+
+                                                <!-- Modal BODY -->
+                                                <div class="modal-body">
+                                                    <?php echo form_open('admin/Categories/editCategory'); ?>
+                                                        <div class="form-group">
+                                                            <label for="new-category" class="control-label"> New category name: </label>
+                                                            <input type="text" class="form-control" name="new_category_name" id="new-category" value="<?php echo $row->name; ?>"/>
+                                                        </div>
+                                                    </form>
+                                                </div>
+
+                                                <!-- Modal FOOTER -->
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-default" data-dismiss="modal"> Close </button>
+                                                    <input type="text" class="btn btn-primary" value="Update"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- End update modal -->
+                                    <?php
+                                        $attr = array('style' => 'display:inline;');
+                                        echo form_open('admin/categories/doAction', $attr);
+                                    
+                                    ?>
+                                    <input type="hidden" name="categId" value="<?php echo $row->id; ?>" />
+                                    <input type="submit" name="action" class="btn btn-danger" value="Delete" />
+                                    </form>
+                                </center>
+                            </td>
                     </tr>
                     <?php endforeach; ?>
                 </tbody>
             </table>
+            
         </div>
     </div>
     

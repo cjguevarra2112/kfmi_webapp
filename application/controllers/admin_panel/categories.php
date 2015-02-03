@@ -28,24 +28,51 @@ class Categories extends CI_Controller {
     public function index() {
         if ($this->session->userdata('is_logged_in')) {
             
-            // Create pagination config array
-            $config = array (
-                'base_url'         => base_url() . 'admin/categories',
-                'per_page'         => 10,
-                'num_links'        => 10,
-                'total_rows'       => $this->db->get('category')->num_rows(),
-                'use_page_numbers' => FALSE
+            $this->load->library('pagination');
+            
+            $config = array(
+                'base_url' => base_url() . 'categories/index',
+                'per_page' => 10,
+                'num_links' => 2,
+                'total_rows' => $this->db->get('category')->num_rows()
             );
             
-            // initialize pagination 
-            $this->pagination->initialize($config);
             
-            // Grab a paginated result
-            $this->data['categs'] = $this->category_model->getCategories('', $config['per_page'], $this->uri->segment(3));
+            $this->pagination->initialize($config);                 
+           
+            $this->data['query'] = $this->category_model->getCategories('', $config['per_page'], $this->uri->segment(3));
             
             $this->load->view('admin/categories', $this->data);
+            
         } else {
             redirect('app/');
         }
+    }
+    
+    
+    // View a caregory based on id
+    public function viewCategory ($categId = false) {
+        if ($categId !== false) {
+            $category = $this->category_model->getCategory($categId);
+            echo $category->name;
+            
+        }
+    }
+    
+    // Performs either an edit or a delete
+    // NOTE: This sucks so much because it needs to be refreshed just
+    // to display the form UGH >-(
+    // Better off using javascript modal through Boostrap 3 :-P
+    public function  doAction() {
+        $action = $this->input->post('action');
+        $categId = $this->input->post('categId');
+        
+        echo "You want to " . $action . " a category with an id of " . $categId;
+    }
+    
+    // Edit a category
+    public function editCategory () {
+        $category_name = $this->input->post('new_category_name');
+        echo "You've successfully edited " . $category_name;
     }
 }

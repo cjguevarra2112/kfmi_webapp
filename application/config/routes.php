@@ -39,8 +39,18 @@
 */
 
 $route['default_controller'] = "app";
+
+// Admin panel
 $route['admin'] = "admin_panel/admin";
-$route['admin/(:any)'] = "admin_panel/$1";
+$route['admin/(:any)'] = "admin_panel/$1/index";
+
+// Category module
+$route['categories/index'] = "admin_panel/categories";
+$route['categories/index/(:num)'] = "admin_panel/categories/index/$1";
+$route['categories/viewCategory/(:num)'] = "admin_panel/categories/viewCategory/$1";
+
+
+
 $route['404_override'] = '';
 
 

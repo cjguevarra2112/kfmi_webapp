@@ -49,19 +49,19 @@
                             <a  href="<?php echo base_url('admin') ?> "> <i class="fa fa-dashboard fa-3x"></i>Dashboard</a>
                         </li>
                           <li>
-                            <a  href="<?php echo base_url('admin/items'); ?>"> <i class="fa fa-desktop fa-3x"></i> Manage Items </a>
+                            <a  href="<?php echo base_url('admin/items/index'); ?>"> <i class="fa fa-desktop fa-3x"></i> Manage Items </a>
                         </li>
                         <li>
-                            <a  href="<?php echo base_url('admin/categories'); ?>"><i class="fa fa-qrcode fa-3x"></i> Manage Categories </a>
+                            <a  href="<?php echo base_url('admin/categories/index'); ?>"><i class="fa fa-qrcode fa-3x"></i> Manage Categories </a>
                         </li>
                                <li  >
-                            <a  href="<?php echo base_url('admin/accounts'); ?>"><i class="fa fa-bar-chart-o fa-3x"></i> Manage Accounts </a>
+                            <a  href="<?php echo base_url('admin/accounts/index'); ?>"><i class="fa fa-bar-chart-o fa-3x"></i> Manage Accounts </a>
                         </li>	
                           <li  >
-                        <a  href="<?php echo base_url('admin/logs'); ?>"><i class="fa fa-table fa-3x"></i> View Logs </a>
+                        <a  href="<?php echo base_url('admin/logs/index'); ?>"><i class="fa fa-table fa-3x"></i> View Logs </a>
                         </li>
                         <li  >
-                            <a  href="<?php echo base_url('admin/cart'); ?>"><i class="fa fa-edit fa-3x"></i> Purchase Cart </a>
+                            <a  href="<?php echo base_url('admin/cart/index'); ?>"><i class="fa fa-edit fa-3x"></i> Purchase Cart </a>
                         </li>				
 
 

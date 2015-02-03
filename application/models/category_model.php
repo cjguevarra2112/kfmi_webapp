@@ -4,8 +4,6 @@ class Category_model extends CI_Model {
     public function __construct () {
         parent::__construct();
         
-        // Load pagination library
-        $this->load->library('pagination');
     }
     
     // Fetches all or several categories base on the query string
@@ -21,5 +19,13 @@ class Category_model extends CI_Model {
             $query = $this->db->get('category', $per_page, $offset);
             return $query;
         }
+    }
+    
+    // Grabs a single category by Id
+    public function getCategory ($categId) {
+        $query = $this->db->get_where('category', array('id' => $categId));
+         if ($query->num_rows() > 0) {
+             return $query->row();
+         }
     }
 }
