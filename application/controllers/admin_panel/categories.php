@@ -50,14 +50,32 @@ class Categories extends CI_Controller {
     }
     
     
-    // View a caregory based on id
-    public function viewCategory ($categId = false) {
-        if ($categId !== false) {
-            $category = $this->category_model->getCategory($categId);
-            echo $category->name;
+    // Displays categories based on a search
+    // In paginated form
+    public function viewSearch () {
+        if ($this->session->userdata('is_logged_in')) {
+            $searchQuery = $this->input->post('categorySearch');
+
+            $this->load->library('pagination');
+
+            $config = array(
+                'base_url' => base_url() . 'categories/index',
+                'per_page' => 10,
+                'num_links' => 2,
+                'total_rows' => $this->db->get('category')->num_rows()
+            );
+
+            $this->pagination->initialize($config);                 
+
+            $this->data['query'] = $this->category_model->getCategories($searchQuery, $config['per_page'], $this->uri->segment(3));
+            $this->load->view('admin/categories', $this->data);
             
+        } else {
+            redirect('app/');
         }
+        
     }
+    
     
     // Performs either an edit or a delete
     // NOTE: This sucks so much because it needs to be refreshed just

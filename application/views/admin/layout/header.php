@@ -15,6 +15,8 @@
         <link href="<?php echo base_url(); ?>static/css/custom.css" rel="stylesheet" />
          <!-- GOOGLE FONTS-->
         <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
+        
+        <link rel="stylesheet" href="<?php echo base_url(); ?>static/css/style.css" />
     </head>
     <body>
         <div id="wrapper">
