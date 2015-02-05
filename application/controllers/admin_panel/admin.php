@@ -44,13 +44,20 @@ class Admin extends CI_Controller {
 
     // Redirect to item management module
     public function items () {
-        // echo "<h1> Item management </h1>";
-        redirect('admin_panel/items');
+        
+		if ($this->session->userdata('is_logged_in')) {
+			redirect('admin_panel/items');
+		} else {
+			$this->home();
+		}
+        
     }
     
     // Redirect to categories management module
     public function categories () {
-        redirect('admin_panel/categories');
+    	if ($this->session->userdata('is_logged_in') && $this->session->userdata('role') == 'Admin') {
+        	redirect('admin_panel/categories');
+		}
     }
     
     // Redirect to accounts management module
