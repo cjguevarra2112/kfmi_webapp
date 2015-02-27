@@ -28,7 +28,7 @@ class Admin extends CI_Controller {
     
     // Index page shows home page
     public function index () {
-        $this->home();
+            $this->home();
     }
     
     
@@ -44,8 +44,7 @@ class Admin extends CI_Controller {
 
     // Redirect to item management module
     public function items () {
-        
-		if ($this->session->userdata('is_logged_in')) {
+		if ($this->session->userdata('is_logged_in') ) {
 			redirect('admin_panel/items');
 		} else {
 			$this->home();
@@ -55,7 +54,7 @@ class Admin extends CI_Controller {
     
     // Redirect to categories management module
     public function categories () {
-    	if ($this->session->userdata('is_logged_in') && $this->session->userdata('role') == 'Admin') {
+    	if ($this->session->userdata('is_logged_in')) {
         	redirect('admin_panel/categories');
 		}
     }
@@ -77,9 +76,6 @@ class Admin extends CI_Controller {
         // echo "<h1> Purchase Cart </h1>";
         redirect('admin_panel/cart');
     }
-    
-    
-    
     
     // Items page
     /*

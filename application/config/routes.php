@@ -47,9 +47,11 @@ $route['admin/(:any)'] = "admin_panel/$1/index";
 // Category module
 $route['categories/index'] = "admin_panel/categories";
 $route['categories/index/(:num)'] = "admin_panel/categories/index/$1";
-$route['categories/viewCategory/(:num)'] = "admin_panel/categories/viewCategory/$1";
+// $route['categories/viewCategory/(:num)'] = "admin_panel/categories/viewCategory/$1";
 
-
+// Items module
+$route['items/index'] = "admin_panel/items";
+$route['items/index/(:num)'] = "admin_panel/items/index/$1";
 
 $route['404_override'] = '';
 

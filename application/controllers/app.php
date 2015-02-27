@@ -49,7 +49,10 @@ class App extends CI_Controller {
 		$this -> load -> view('signin', $data);
 	}
 
-	// Checks for login credentials
+	/**
+         * Checks if login credentials. If the uname/upass combination is valid,
+         * it will redirect user to the admin panel.
+         */
 	public function login_validation() {
 
 		// Set up validation rules
@@ -77,12 +80,13 @@ class App extends CI_Controller {
 
 			$data = array('title' => 'Login', 'header' => 'KFMI Login');
 			$this -> load -> view('signin', $data);
-
-			// redirect('app/login_validation');
 		}
 	}
 
-	// Logs out the user
+	/**
+         * Logs out the current user
+         * This will destroy all session data in the sessions db
+         */
 	public function logout() {
 		if ($this -> session -> userdata('is_logged_in')) {
 

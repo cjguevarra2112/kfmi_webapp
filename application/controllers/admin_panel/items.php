@@ -6,7 +6,7 @@ class Items extends CI_Controller {
         parent::__construct();
 
         // Load the app_model model
-        $this->load->model('app_model');
+        $this->load->model('item_model');
 
         // Disable browser caching
         $this->output->set_header("Cache-Control: no-store, no-cache, must-revalidate, no-transform, max-age=0, post-check=0, pre-check=0");
@@ -28,9 +28,21 @@ class Items extends CI_Controller {
     // 
     public function index() {
         if ($this->session->userdata('is_logged_in')) {
-            $this->load->view('admin/items.php', $this->data);
+            if ($this->session->userdata('role') == 'Admin') {
+                
+                // All items
+                $this->data['items'] = $this->item_model->getItems();
+                
+                $this->load->view('admin/items.php', $this->data);
+            } else {
+                // Show restricted page!
+                // $this->load->view('admin/items.php', $this->data);
+               $this->load->view('other/adminonly', $this->data);
+            }
+                
         } else {
             redirect('app/');
         }
     }
+    
 }

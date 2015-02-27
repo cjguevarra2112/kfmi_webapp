@@ -31,11 +31,42 @@ class Category_model extends CI_Model {
         }
     }
     
-    // Grabs a single category by Id
+    /**
+     * Get a single category
+     * @param int $categId
+     */
     public function getCategory ($categId) {
-        $query = $this->db->get_where('category', array('id' => $categId));
+         $query = $this->db->get_where('category', array('id' => $categId));
          if ($query->num_rows() > 0) {
              return $query->row();
          }
     }
+    
+    /**
+     * Updates a category based off of its Id
+     * @param int $categId   - id of the category
+     * @param str $categName - new category name
+     * @return void
+     */
+    public function updateCategory($categId, $categName) {
+        $this->db->where('id', $categId);
+        $this->db->update('category', array('name' => $categName));
+    }
+    
+    /**
+     * Adds a new category
+     * @param str $categName - category name
+     */
+    public function addCategory ($categName) {
+        $this->db->insert("category", array("name" => $categName));
+    }
+    
+    /**
+     * Deletes a category
+     * @param int $categId - category id
+     */
+    public function deleteCategory ($categId) {
+        $this->db->delete('category', array('id' => $categId));
+    }
+    
 }
