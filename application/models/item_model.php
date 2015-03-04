@@ -16,12 +16,13 @@ class Item_model extends CI_Model {
 	* @return query     - result set object
 	*/
 
-	public function getItems ($queryStr='', $categoryId='') {
+	public function getItems ($queryStr='', $categoryId='', $per_page=10, $offset=0) {
             if ($queryStr == '' && $categoryId == '') {
-                $this->db->select('product.name, product.price, product.quantity');
+                $this->db->select('product.id, product.name, product.price, product.quantity, category.name AS category');
                 $this->db->from('product');
                 $this->db->join('category', 'product.category_id = category.id');
-                $this->db->where('product.category_id', 1);
+                $this->db->limit($per_page, $offset);
+                // $this->db->where('product.category_id', 1);
                 
                 $query = $this->db->get();
                 
@@ -29,7 +30,8 @@ class Item_model extends CI_Model {
                     return FALSE;
                 }
                 return $query;
-                
+            } else {
+
             }
 	}
 }	

@@ -51,7 +51,7 @@
                             <a  href="<?php echo base_url('admin') ?> "> <i class="fa fa-dashboard fa-3x"></i>Dashboard</a>
                         </li>
                           <li>
-                            <a  href="<?php echo base_url('admin/items/index'); ?>"> <i class="fa fa-desktop fa-3x"></i> Manage Items </a>
+                            <a  href="<?php echo base_url('admin/items/index'); ?>"> <i class="fa fa-desktop fa-3x"></i> Items </a>
                         </li>
                         <li>
                             <a  href="<?php echo base_url('admin/categories/index'); ?>"><i class="fa fa-qrcode fa-3x"></i> Manage Categories </a>
