@@ -13,12 +13,15 @@ class Items extends CI_Controller {
         $role = $this->session->userdata('role');
 
         // default view variables for title, heading, and subheading
-        $this->data = array(
+        $this -> data = array(
                 'title'      => 'Admin Panel',
                 'heading'    => 'Welcome, ' . $role,
                 'subheading' => 'This is the admin panel for KFMI inventory app. You currently have no activities yet.',
                 'role'       => $role
         );
+
+        // Grab all categories for item search
+        $this -> data['categories'] = $this -> db -> get ('category');
 
         // Load the app_model model
         $this->load->model('item_model');
@@ -44,16 +47,55 @@ class Items extends CI_Controller {
                 $this -> data['query'] = $this -> item_model -> getItems ('', '', $config['per_page'], $this -> uri -> segment(3) );
 
                 $this->load->view('admin/items.php', $this->data);
-
-            /* } else {
-                // Show restricted page!
-                // $this->load->view('admin/items.php', $this->data);
-               $this->load->view('other/adminonly', $this->data);
-            } */
-                
         } else {
             redirect('app/');
         }
     }
-    
+
+
+    // Show results for search 
+    public function viewSearch () {
+        if ($this -> session -> userdata('is_logged_in') ) {
+            $searchStr =  $this -> input -> post('itemSearch');
+            $category  =  $this -> input -> post('itemCategory');
+
+            if (!$searchStr && !$category) {
+                redirect('admin/items');
+            } else {
+                $config = array(
+                    'base_url' => base_url() . 'items/index',
+                    'per_page' => 10,
+                    'num_links' => 5,
+                    'total_rows' => $this -> item_model -> getItems($searchStr, $category, 10, $this -> uri -> segment(3), true)
+                );
+
+                $this -> pagination -> initialize($config);
+
+                $this -> data['query'] = $this -> item_model -> getItems($searchStr, $category, $config['per_page'], $this -> uri -> segment(3));
+                $this->load->view('admin/items.php', $this->data);
+            }
+        } else {
+            redirect('app/');
+        }
+    }
+
+
+    public function editItem () {
+        
+        $itemId = $this -> input -> post('itemId');
+        $editData = array(
+            'name'        => $this -> input -> post('itemName'),
+            'price'       => $this -> input -> post('itemPrice'),
+            'quantity'    => $this -> input -> post('itemQuantity'),
+            'category_id' => $this -> input -> post('itemCategory')
+        );
+
+        $this -> item_model -> updateItem($itemId, $editData);
+
+        // Dislay success message
+        $this -> data['message'] = "updated an item";
+        $this -> data['back']    = base_url('admin/items');
+
+        $this -> load -> view ('other/success', $this -> data);
+    }
 }

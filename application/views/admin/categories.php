@@ -94,7 +94,6 @@
                                                         <?php echo form_open('admin/categories/editCategory'); ?>
                                                             <div class="form-group">
                                                                 <label for="new-category" class="control-label"> New category name: </label>
-                                                                <input type="hidden" name="categoryId" value="<?php echo $row->id; ?>" />
                                                                 <input type="text" class="form-control" name="newCategoryName" id="new-category" value="<?php echo $row->name; ?>" required/>
                                                             </div>
                                                     </div>
@@ -102,6 +101,7 @@
                                                     <!-- Modal FOOTER -->
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn btn-default" data-dismiss="modal"> Close </button>
+                                                        <input type="hidden" name="itemId" value="<?php echo $row->id; ?>" />
                                                         <button type="submit" class="btn btn-primary"> Update </button>
                                                         </form>
                                                     </div>

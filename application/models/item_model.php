@@ -16,22 +16,45 @@ class Item_model extends CI_Model {
 	* @return query     - result set object
 	*/
 
-	public function getItems ($queryStr='', $categoryId='', $per_page=10, $offset=0) {
-            if ($queryStr == '' && $categoryId == '') {
-                $this->db->select('product.id, product.name, product.price, product.quantity, category.name AS category');
-                $this->db->from('product');
-                $this->db->join('category', 'product.category_id = category.id');
-                $this->db->limit($per_page, $offset);
-                // $this->db->where('product.category_id', 1);
-                
-                $query = $this->db->get();
-                
-                if ($query->num_rows() == 0) {
-                    return FALSE;
-                }
-                return $query;
-            } else {
+	public function getItems ($queryStr='', $categoryId='', $per_page=10, $offset=0, $simple=FALSE) {
+            
+        $this -> db -> select('product.id, product.name, product.price, product.quantity, product.category_id, category.name AS category');
+        $this -> db -> from('product');
+        $this -> db -> join('category', 'product.category_id = category.id');
+        
+        if ($queryStr != '') {
+        	$this -> db -> like ('product.name', $queryStr);
+        }
 
-            }
+        if ($categoryId !== '') {
+        	$this -> db -> where ('category.id', $categoryId);
+        }
+
+        $this -> db -> limit($per_page, $offset);
+        $query = $this -> db -> get();
+        
+
+        if ($simple) {
+        	return $query->num_rows();
+        } else {
+
+        	if ($query->num_rows() == 0) {
+            	return FALSE;
+        	} else {
+        		return $query;
+        	}
+        }
+ 
+	}
+
+
+	/**
+	* Updates a single item based off of item id
+	* @param int   $itemId   => id of the item to be updated
+	* @param array $editData => array containing new item data
+	*/
+	public function updateItem ($itemId, $editData) {
+		$this -> db -> where('id', $itemId);
+		$this -> db -> update('product', $editData);
 	}
 }	
