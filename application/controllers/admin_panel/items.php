@@ -1,4 +1,4 @@
-<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+<?php if ( ! defined('BASEPATH')) { exit('No direct script access allowed'); };
 
 class Items extends CI_Controller {
     
@@ -15,7 +15,10 @@ class Items extends CI_Controller {
         // default view variables for title, heading, and subheading
         $this -> data = array(
                 'title'      => 'Admin Panel',
-                'heading'    => 'Welcome, ' . $role,
+                'heading'    => '>set_header("Pragma: no-cache");
+
+        // Role of the current user
+        $role = $this->sessWelcome, ' . $role,
                 'subheading' => 'This is the admin panel for KFMI inventory app. You currently have no activities yet.',
                 'role'       => $role
         );
@@ -53,7 +56,7 @@ class Items extends CI_Controller {
     }
 
 
-    // Show results for search 
+    // Show results for search
     public function viewSearch () {
         if ($this -> session -> userdata('is_logged_in') ) {
             $searchStr =  $this -> input -> post('itemSearch');
@@ -72,17 +75,21 @@ class Items extends CI_Controller {
                 $this -> pagination -> initialize($config);
 
                 $this -> data['query'] = $this -> item_model -> getItems($searchStr, $category, $config['per_page'], $this -> uri -> segment(3));
-                $this->load->view('admin/items.php', $this->data);
+                $this -> load->view('admin/items.php', $this -> data);
             }
         } else {
             redirect('app/');
         }
     }
 
-
+    
+    /**
+     * Update item
+     */
     public function editItem () {
         
         $itemId = $this -> input -> post('itemId');
+        
         $editData = array(
             'name'        => $this -> input -> post('itemName'),
             'price'       => $this -> input -> post('itemPrice'),
@@ -97,5 +104,42 @@ class Items extends CI_Controller {
         $this -> data['back']    = base_url('admin/items');
 
         $this -> load -> view ('other/success', $this -> data);
+    }
+
+    /**
+    * Delete item ...TBC
+    */
+    public function deleteItem () {
+        $itemId = $this -> input -> post('itemId');
+        $this -> item_model -> deleteItem($itemId);
+
+        // Dislay success message
+        $this -> data['message'] = "deleted an item";
+        $this -> data['back']    = base_url('admin/items');
+
+        $this -> load -> view ('other/success', $this -> data);
+    }
+
+    /**
+    * Creates a new Item
+    *
+    */
+    public function addItem () {
+        $itemData = array(
+            'name'        => $this -> input -> post('itemName'),
+            'price'       => $this -> input -> post('itemPrice'),
+            'quantity'    => $this -> input -> post('itemQuantity'),
+            'category_id' => $this -> input -> post('itemCategory')
+        );
+
+        $this -> item_model -> addItem ($itemData);
+        // Dislay success message
+        $this -> data['message'] = "added an item";
+        $this -> data['back']    = base_url('admin/items');
+
+        $this -> load -> view ('other/success', $this -> data);
+
+
+
     }
 }

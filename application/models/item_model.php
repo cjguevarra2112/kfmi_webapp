@@ -47,6 +47,14 @@ class Item_model extends CI_Model {
  
 	}
 
+	/**
+	* Deletes an item based off of itemId
+	* @param $itemId 
+	*/
+	public function deleteItem($itemId) {
+		$this -> db -> delete('product', array('id' => $itemId) );
+	}
+
 
 	/**
 	* Updates a single item based off of item id
@@ -57,4 +65,13 @@ class Item_model extends CI_Model {
 		$this -> db -> where('id', $itemId);
 		$this -> db -> update('product', $editData);
 	}
+
+	/**
+	*	Adds a new item
+	*   @param array $itemData
+	*/
+	public function addItem($itemData) {
+		$this -> db -> insert('product', $itemData);
+	}
+
 }	

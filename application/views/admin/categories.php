@@ -10,7 +10,7 @@
                <input type="text" name="categorySearch" class="form-control" placeholder="Search" />
                <button type="submit" class="btn btn-primary">  Search </button>
            </div>
-        <button type="button" class="btn btn-info pull-right" data-toggle="modal" data-target="#addCategory"> Create new category </button>
+        <button type="button" class="btn btn-info pull-right" data-toggle="modal" data-target="#addCategory"><span class="glyphicon glyphicon-plus"></span> Create new category </button>
         </form>
         
         <!-- Modal for add category -->
@@ -101,7 +101,7 @@
                                                     <!-- Modal FOOTER -->
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn btn-default" data-dismiss="modal"> Close </button>
-                                                        <input type="hidden" name="itemId" value="<?php echo $row->id; ?>" />
+                                                        <input type="hidden" name="categoryId" value="<?php echo $row->id; ?>" />
                                                         <button type="submit" class="btn btn-primary"> Update </button>
                                                         </form>
                                                     </div>
@@ -109,6 +109,7 @@
                                             </div>
                                         </div>
                                         <!-- End update modal -->
+                                        <!--
                                         <?php
                                             $attr = array('style' => 'display:inline;');
                                             echo form_open('admin/categories/deleteCategory', $attr);
@@ -116,7 +117,36 @@
                                         ?>
                                         <input type="hidden" name="categId" value="<?php echo $row->id; ?>" />
                                         <button type="submit" class="btn btn-danger btn-md"> <span class="glyphicon glyphicon-trash"></span> Delete </button>
-                                        </form>
+                                        </form> -->
+
+                                        <button type="button" class="btn btn-danger btn-md" data-toggle="modal" data-target="#deleteModal_<?php echo $row->id; ?>"> <span class="glyphicon glyphicon-trash"></span> Delete </button>
+                                        
+                                        <!-- Delete category modal -->
+                                        <div class="modal fade" id="deleteModal_<?php echo $row->id; ?>" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    
+                                                    <div class="modal-header">
+                                                        <h2>Confirm delete </h2>
+                                                    </div>
+
+                                                    <div class="modal-body">
+                                                        <p>Are you sure you want to delete this category? </p>
+                                                        <p><strong><?php echo $row->name; ?></strong></p>
+                                                    </div>
+
+                                                    <div class="modal-footer">
+                                                        <?php echo form_open('admin/categories/deleteCategory'); ?>
+                                                        <input type="hidden" name="categId" value="<?php echo $row->id; ?>" />
+                                                        <button class="btn btn-default" data-dismiss="modal"> Cancel </button>
+                                                        <button type="submit" class="btn btn-danger btn-md"> <span class="glyphicon glyphicon-trash"></span> Delete </button>
+                                                        </form>
+                                                    </div>
+
+                                                </div>
+                                            </div>                    
+
+                                        </div> <!-- End delete modal -->
                                     </center>
                                 </td>
                         </tr>

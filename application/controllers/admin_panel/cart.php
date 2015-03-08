@@ -1,4 +1,4 @@
-<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+<?php if ( ! defined('BASEPATH')) { exit('No direct script access allowed'); };
 
 class Cart extends CI_Controller {
     
@@ -24,8 +24,9 @@ class Cart extends CI_Controller {
         );
     }
     
-    // Display categories in paginated form
-    // 
+    /**
+     * Displays cart
+     */
     public function index() {
         if ($this->session->userdata('is_logged_in')) {
             $this->load->view('admin/cart', $this->data);
@@ -33,4 +34,44 @@ class Cart extends CI_Controller {
             redirect('app/');
         }
     }
+    
+    /**
+     * Inserts an item to cart
+     */
+    public function addToCart () {
+        
+    }
+    
+    /**
+     * Updates an item quantity
+     */
+    public function updateCart () {
+        
+    }
+    
+    /**
+     * Removes an item to cart 
+     */
+    public function removeFromCart () {
+        
+    }
+    
+    /**
+     * Clears cart
+     */
+    public function clearCart () {
+        
+    }
+    
+    /**
+     * Proceed with checkout
+     */
+    public function checkout () {
+        
+    }
+    
+    public function finishTransaction () {
+        
+    }
+    
 }

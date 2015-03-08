@@ -75,6 +75,13 @@ class Categories extends CI_Controller {
     // Better off using javascript modal through Boostrap 3 :-P
     public function deleteCategory() {
         $categId = $this -> input -> post('categId');
+        $this -> category_model -> deleteCategory($categId);
+
+        // View success page!
+        $this -> data['message'] = 'deleted a category';
+        $this -> data['back']    = base_url('admin/categories');
+
+        $this -> load -> view('other/success', $this -> data);
         
     }
 
