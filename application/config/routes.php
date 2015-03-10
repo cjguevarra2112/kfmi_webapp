@@ -53,6 +53,9 @@ $route['categories/index/(:num)'] = "admin_panel/categories/index/$1";
 $route['items/index'] = "admin_panel/items";
 $route['items/index/(:num)'] = "admin_panel/items/index/$1";
 
+// Cart module
+// $route['cart/(:any)'] = 'admin_panel/$1';
+
 $route['404_override'] = '';
 
 

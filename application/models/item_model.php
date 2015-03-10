@@ -18,33 +18,32 @@ class Item_model extends CI_Model {
 
 	public function getItems ($queryStr='', $categoryId='', $per_page=10, $offset=0, $simple=FALSE) {
             
-        $this -> db -> select('product.id, product.name, product.price, product.quantity, product.category_id, category.name AS category');
-        $this -> db -> from('product');
-        $this -> db -> join('category', 'product.category_id = category.id');
-        
-        if ($queryStr != '') {
-        	$this -> db -> like ('product.name', $queryStr);
-        }
+            $this -> db -> select('product.id, product.name, product.price, product.quantity, product.category_id, category.name AS category');
+            $this -> db -> from('product');
+            $this -> db -> join('category', 'product.category_id = category.id');
 
-        if ($categoryId !== '') {
-        	$this -> db -> where ('category.id', $categoryId);
-        }
+            if ($queryStr != '') {
+                $this -> db -> like ('product.name', $queryStr);
+            }
 
-        $this -> db -> limit($per_page, $offset);
-        $query = $this -> db -> get();
-        
+            if ($categoryId !== '') {
+                $this -> db -> where ('category.id', $categoryId);
+            }
 
-        if ($simple) {
-        	return $query->num_rows();
-        } else {
+            $this -> db -> limit($per_page, $offset);
+            $query = $this -> db -> get();
 
-        	if ($query->num_rows() == 0) {
-            	return FALSE;
-        	} else {
-        		return $query;
-        	}
-        }
- 
+
+            if ($simple) {
+                    return $query->num_rows();
+            } else {
+
+                if ($query->num_rows() == 0) {
+                    return FALSE;
+                } else {
+                    return $query;
+                }
+            }
 	}
 
 	/**
@@ -73,5 +72,22 @@ class Item_model extends CI_Model {
 	public function addItem($itemData) {
 		$this -> db -> insert('product', $itemData);
 	}
+        
+        
+        /**
+         * Fetches quantity of an item
+         * @param int $itemId => Id of the product
+         */
+        public function getQuantity ($itemId) {
+            $this -> db -> select('quantity');
+            $this -> db -> where('id', $itemId);
+            $query = $this -> db -> get('product');
+            
+            if ($query->num_rows() > 0) {
+                return $query->row()->quantity;
+            } else {
+                return FALSE;
+            }
+        }
 
 }	

@@ -6,7 +6,7 @@ class Cart extends CI_Controller {
         parent::__construct();
 
         // Load the app_model model
-        $this->load->model('app_model');
+        $this->load->model('item_model');
 
         // Disable browser caching
         $this->output->set_header("Cache-Control: no-store, no-cache, must-revalidate, no-transform, max-age=0, post-check=0, pre-check=0");
@@ -40,27 +40,98 @@ class Cart extends CI_Controller {
      */
     public function addToCart () {
         
+        // Fetch item info from "Add to cart" POST Request
+        $cartItem = array(
+            'id'    => $this -> input -> post('id'),
+            'name'  => $this -> input -> post('name'),
+            'price' => $this -> input -> post('price'),
+            'qty'   => $this -> input -> post('qty')
+        );
+        
+        if ($cartItem['qty'] > 0) {
+            $this -> cart -> insert($cartItem);
+        }
+        
+        // Redirect to cart index (displays cart)
+        redirect(base_url('admin/cart'));
+        
     }
+    
+    
+    /**
+     * TEST METHOD: displays shopping cart array
+     */
+    public function showCart () {
+        $cart = $this -> cart -> contents();
+        
+        if (!$cart) {
+            echo 'Your cart is empty!'; 
+        
+        } else {    
+            echo "<h2>Your Shopping Cart </h2><br/>";
+            echo "<pre>";
+            print_r($cart);
+            echo "</pre>";
+            echo '<strong> Total: </strong>' . $this -> cart -> total();
+        
+
+        }
+    }
+    
     
     /**
      * Updates an item quantity
      */
     public function updateCart () {
         
+        // rowid_1 qty_1
+        // rowid_2 qty_2
+        
+        $total = $this -> input -> post('total');
+        
+        for ($i = 1; $i < $total; $i++) {
+            
+            // Check if requested qty is smaller than actual item quantity
+            // If so, update the cart
+            
+            $itemId = $this -> input -> post('id_' . (string)$i);
+            
+            $data = array(
+                'rowid' => $this -> input -> post('rowid_' . (string)$i),
+                'qty'   => $this -> input -> post('qty_' . (string)$i)
+            );
+            
+            if ($data['qty'] <= $this -> item_model -> getQuantity($itemId) ) {
+                $this -> cart -> update($data);
+            }
+        }
+        
+        redirect(base_url('admin/cart'));
+        
+        
     }
     
     /**
-     * Removes an item to cart 
+     * Removes an item to cart
+     * @param1 string $rowid = unique identifier of a cart item
      */
-    public function removeFromCart () {
+    public function removeFromCart ($rowid) {
         
+        $data = array(
+            'rowid' => $rowid,
+            'qty'   => 0
+        );
+        
+        $this -> cart -> update($data);
+        redirect(base_url('admin/cart'));
     }
     
     /**
      * Clears cart
      */
     public function clearCart () {
-        
+        $this -> cart -> destroy();
+        redirect(base_url('admin/cart'));
     }
     
     /**
@@ -70,8 +141,13 @@ class Cart extends CI_Controller {
         
     }
     
+    /**
+     * Finish transaction
+     */
     public function finishTransaction () {
         
     }
+    
+    
     
 }

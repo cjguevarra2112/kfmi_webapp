@@ -28,7 +28,8 @@
                             <?php endif; ?>
                     </div>
             </form>
-			
+		
+            <!-- Modal - Create item -->
             <div class="modal fade" id="addItemModal" tab-index="-1" role="dialog" aria-hidden="true" aria-labelledby="addItemModalLabel">
                     <div class="modal-dialog">
                         <div class="modal-content">
@@ -71,7 +72,7 @@
                             </div>
                     </div>
                 </div>
-            </div> <!-- END ADD ITEM MODAL -->
+            </div> <!-- END Create ITEM MODAL -->
 	</div>
 
 	<!-- Items panel -->
@@ -114,8 +115,26 @@
 							<td><?php echo $row->quantity; ?></td>
 							<td><?php echo $row->category; ?></td>
 							<td>
-								<button style="display:inline;" class="btn btn-info btn-md"> <span class="glyphicon glyphicon-shopping-cart"></span> Add to Cart </button>
-								
+                                                                <!-- FORM: Add to Cart -->
+                                                                <div class="form-inline">
+                                                                    <?php
+                                                                        echo form_open('admin/cart/addToCart', array('class' => 'form-group'));
+                                                                        $cartItem = array(
+                                                                            'id'       => $row->id,
+                                                                            'name'     => htmlspecialchars($row->name, ENT_QUOTES, 'UTF-8'),
+                                                                            'price'    => $row->price,
+                                                                            'qty' => 1
+                                                                        );
+
+                                                                        echo form_hidden($cartItem);
+                                                                    ?>
+
+                                                                        <button type="submit" style="display:inline;" class="btn btn-info btn-md"> <span class="glyphicon glyphicon-shopping-cart"></span> Add to Cart </button>
+
+                                                                    </form> <!-- END Add to cart Form -->
+                                                               <!-- </div> -->
+                                                                
+                                                                
 								<?php if ($this->data['role'] == 'Admin'): ?>
 									<button style="display:inline;" class="btn btn-primary btn-md" data-toggle="modal" data-target="#editModal_<?php echo $row->id; ?>"> <span class="glyphicon glyphicon-pencil"></span> Edit </button>
 									<button style="display:inline;" class="btn btn-danger btn-md"  data-toggle="modal" data-target="#deleteModal_<?php echo $row->id; ?>"> <span class="glyphicon glyphicon-trash"></span> Delete </button>
@@ -147,7 +166,7 @@
 												</div>
 											</div>
 										</div>
-									</div>
+									</div> <!-- END Delete modal confirmation -->
 
 									<!-- Edit item modal -->
 									<div class="modal fade" id="editModal_<?php echo $row->id;?>" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
@@ -196,6 +215,7 @@
 										</div>
 									</div>
 								<?php endif; ?>
+                                                                </div>
 							</td>
 						</tr>
 					<?php endforeach; ?>
