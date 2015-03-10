@@ -5,8 +5,11 @@ class Cart extends CI_Controller {
     public function __construct () {
         parent::__construct();
 
-        // Load the app_model model
+        // Load the cart_model model
         $this->load->model('cart_model');
+
+        // Load the item model
+        $this -> load -> model('item_model');
 
         // Disable browser caching
         $this->output->set_header("Cache-Control: no-store, no-cache, must-revalidate, no-transform, max-age=0, post-check=0, pre-check=0");
@@ -187,6 +190,8 @@ class Cart extends CI_Controller {
             // Pass in order details and cart details
             $this -> cart_model -> recordOrder ($order, $this -> cart -> contents() );
 
+            // Destroy current cart session
+            $this -> cart -> destroy();
 
             echo "Payment Finished! Now do the receipts! ";
 
