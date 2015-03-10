@@ -10,7 +10,7 @@
                <input type="text" name="categorySearch" class="form-control" placeholder="Search" />
                <button type="submit" class="btn btn-primary">  Search </button>
            </div>
-        <button type="button" class="btn btn-info pull-right" data-toggle="modal" data-target="#addCategory"><span class="glyphicon glyphicon-plus"></span> Create new category </button>
+        <button type="button" class="btn btn-success pull-right" data-toggle="modal" data-target="#addCategory"><span class="glyphicon glyphicon-plus"></span> Create new category </button>
         </form>
         
         <!-- Modal for add category -->
@@ -33,8 +33,8 @@
                     </div>
                     
                     <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal"> Close </button>
                         <button type="submit" class="btn btn-primary"> Add </button>
-                        <button type="button" class="btn btn-danger" data-dismiss="modal"> Close </button>
                         </form>
                     </div>
                 </div>
@@ -131,7 +131,7 @@
                                                     </div>
 
                                                     <div class="modal-body">
-                                                        <p>Are you sure you want to delete this category? </p>
+                                                        <p>Are you sure you want to delete this category? All items under this category will be lost! </p>
                                                         <p><strong><?php echo $row->name; ?></strong></p>
                                                     </div>
 

@@ -62,11 +62,12 @@ class Category_model extends CI_Model {
     }
     
     /**
-     * Deletes a category
+     * Deletes a category and all items under that category
      * @param int $categId - category id
      */
     public function deleteCategory ($categId) {
-        $this->db->delete('category', array('id' => $categId));
+        $this -> db -> delete('product', array('category_id' => $categId));
+        $this -> db->delete('category', array('id' => $categId));
     }
     
 }

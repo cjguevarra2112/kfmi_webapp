@@ -59,8 +59,8 @@
                                <li  >
                             <a  href="<?php echo base_url('admin/accounts/index'); ?>"><i class="fa fa-bar-chart-o fa-3x"></i> Manage Accounts </a>
                         </li>	
-                          <li  >
-                        <a  href="<?php echo base_url('admin/logs/index'); ?>"><i class="fa fa-table fa-3x"></i> View Logs </a>
+                        <li>
+                        <a  href="<?php echo base_url('admin/customer/index'); ?>"><i class="fa fa-table fa-3x"></i> Customers </a>
                         </li>
                         <li  >
                             <a  href="<?php echo base_url('admin/cart/index'); ?>"><i class="fa fa-edit fa-3x"></i> Purchase Cart </a>

@@ -6,7 +6,7 @@
 
 <?php
     if (!$this -> cart -> contents() ) {
-        echo '<h4 class="text-center text-success bg-success" style="padding-bottom:2%; padding-top:2%; border-radius:7px;"> You currently have no items in cart </h4>';
+        echo '<h4 class="text-center text-success bg-success" style="padding-bottom:2%; padding-top:2%; border-radius:7px;"> There are currently no items in the cart </h4>';
     } else {
 ?>
 
@@ -15,11 +15,11 @@
     <table class="table table-hover table-bordered" cellpadding="6" cellspacing="1" style="width:100%" border="0">
 
     <tr>
-      <th> Quantity </th>
-      <th>Item Description</th>
-      <th style="text-align:right">Item Price</th>
-      <th style="text-align:right">Sub-Total</th>
-      <th> </th>
+        <th> Quantity </th>
+        <th>Item Description</th>
+        <th style="text-align:right">Item Price</th>
+        <th style="text-align:right">Sub-Total</th>
+        <th> </th>
     </tr>
     
     <!-- Cart row counter -->
@@ -36,7 +36,7 @@
             ?>
 
             <tr>
-              <td><?php echo form_input(array('name' => 'qty_'.(string)$i, 'value' => $items['qty'], 'maxlength' => '3', 'size' => '5')); ?></td>
+              <td><?php echo form_input(array('name' => 'qty_'.(string)$i, 'value' => $items['qty'], 'maxlength' => '3', 'size' => '5', 'class' => "form-control")); ?></td>
               <td>
                     <?php echo $items['name']; ?>
               </td>
@@ -71,7 +71,7 @@
     
     
     <button type="submit" class="btn btn-primary"> <span class="glyphicon glyphicon-refresh"></span> Update cart </button> 
-    <button type="button" class="btn btn-success"> <span class="glyphicon glyphicon-log-out"> </span> Proceed to checkout </button> 
+    <a href="<?php echo base_url('admin/cart/checkout'); ?>" class="btn btn-success"> <span class="glyphicon glyphicon-log-out"> </span> Proceed to checkout </a> 
 </p>
 </form>
 <?php } ?>

@@ -66,9 +66,9 @@ class Admin extends CI_Controller {
     }
     
     // Redirect to view logs module 
-    public function logs () {
+    public function customer () {
         // echo "<h1> View Logs </h1>";
-        redirect('admin_panel/logs');
+        redirect('admin_panel/customer');
     }
     
     // Redirect to purchase cart module

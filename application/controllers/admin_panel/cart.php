@@ -6,7 +6,7 @@ class Cart extends CI_Controller {
         parent::__construct();
 
         // Load the app_model model
-        $this->load->model('item_model');
+        $this->load->model('cart_model');
 
         // Disable browser caching
         $this->output->set_header("Cache-Control: no-store, no-cache, must-revalidate, no-transform, max-age=0, post-check=0, pre-check=0");
@@ -22,6 +22,11 @@ class Cart extends CI_Controller {
                 'subheading' => 'This is the admin panel for KFMI inventory app. You currently have no activities yet.',
                 'role'       => $role
         );
+
+        // Load date helper
+        $this -> load -> helper('date');
+
+
     }
     
     /**
@@ -50,10 +55,10 @@ class Cart extends CI_Controller {
         
         if ($cartItem['qty'] > 0) {
             $this -> cart -> insert($cartItem);
+            
+            // Redirect to cart index (displays cart)
+            redirect(base_url('admin/cart'));
         }
-        
-        // Redirect to cart index (displays cart)
-        redirect(base_url('admin/cart'));
         
     }
     
@@ -128,6 +133,7 @@ class Cart extends CI_Controller {
     
     /**
      * Clears cart
+     * 
      */
     public function clearCart () {
         $this -> cart -> destroy();
@@ -138,14 +144,82 @@ class Cart extends CI_Controller {
      * Proceed with checkout
      */
     public function checkout () {
-        
+
+        // Need cart details for cart summary
+        $this -> data['cart'] = $this -> cart -> contents();
+
+        // Need total amount for cart summary
+        $this -> data['total'] = $this -> cart -> format_number($this -> cart -> total());
+
+        // Need list of customers for payment
+        $this -> data['customers'] = $this -> db -> get('customer');
+
+
+        $this -> load -> view('admin/checkout', $this->data);
     }
     
     /**
      * Finish transaction
      */
-    public function finishTransaction () {
-        
+    public function finishPayment () {
+        $this -> form_validation -> set_rules ('cashIn', 'Cash In', 'required|decimal|callback_validate_cashin');
+        $this -> form_validation -> set_rules ('customer', 'Customer', 'required');
+
+        // Set error delimiters
+        $this->form_validation->set_error_delimiters('<p class="bg-danger text-danger" style="padding:2%;" > Error: ', '</div>');
+
+        if ( $this -> form_validation -> run() ) {
+
+            $orderDate = time() + (7 * 3600);
+            $cashIn   = $this -> input -> post('cashIn');
+            $totalAmt = $this -> cart -> format_number( $this -> cart -> total());
+
+            // orders data array
+            $order = array(
+                'order_date'   => $orderDate, // current timestamp
+                'customer_id'  => $this -> input -> post ('customer'),
+                'cash_in'      => $cashIn,
+                'cash_change'  => ($cashIn - $totalAmt),
+                'total_amount' => $totalAmt,
+                'order_key'    => hash('sha256', (string)$orderDate . (string)$totalAmt )
+            );
+
+            // Pass in order details and cart details
+            $this -> cart_model -> recordOrder ($order, $this -> cart -> contents() );
+
+
+            echo "Payment Finished! Now do the receipts! ";
+
+        } else {
+
+            // Display the checkout form again
+
+            // Need cart details for cart summary
+            $this -> data['cart'] = $this -> cart -> contents();
+
+            // Need total amount for cart summary
+            $this -> data['total'] = $this -> cart -> format_number($this -> cart -> total());
+
+            // Need list of customers for payment
+            $this -> data['customers'] = $this -> db -> get('customer');
+
+
+            $this -> load -> view('admin/checkout', $this->data);
+        }
+    }
+
+
+    // Callback function for cash in
+    public function validate_cashin () {
+        $totalAmount = $this -> cart -> format_number( $this -> cart -> total());
+        $cashIn = $this -> input -> post('cashIn');
+
+        if ($cashIn >= $totalAmount) {
+            return TRUE;
+        } else {
+            $this -> form_validation -> set_message('validate_cashin', 'Not enough Cash In amount!');
+            return FALSE;
+        }
     }
     
     

@@ -69,10 +69,6 @@ class Categories extends CI_Controller {
 
     }
 
-    // Performs either an edit or a delete
-    // NOTE: This sucks so much because it needs to be refreshed just
-    // to display the form UGH >-(
-    // Better off using javascript modal through Boostrap 3 :-P
     public function deleteCategory() {
         $categId = $this -> input -> post('categId');
         $this -> category_model -> deleteCategory($categId);
