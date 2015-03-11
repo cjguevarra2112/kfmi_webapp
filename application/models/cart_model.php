@@ -4,6 +4,8 @@ class Cart_model extends CI_Model {
 
 	public function __construct() {
 		parent::__construct();
+
+		$this -> load -> model ('item_model');
 	}
 
 
@@ -28,8 +30,20 @@ class Cart_model extends CI_Model {
 				'product_id' => $product_id
 			);
 
+			// insert orderproduct entry
 			$this -> db -> insert('orderproducts', $data);
 		}
+
+		// Loop through cart array to update quantity
+		foreach ($cartDetails as $cart) {
+			$product_id = $cart['id'];
+			$current_qty = $this -> item_model -> getQuantity($product_id);
+
+			$this -> db -> where ('id', $product_id);
+			$this -> db -> update('product', array('quantity' => $current_qty - $cart['qty']) );
+		}
+
+
 	}
 
 }

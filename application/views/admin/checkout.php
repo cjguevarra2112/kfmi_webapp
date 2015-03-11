@@ -1,7 +1,7 @@
 <?php $this->load->view('admin/layout/header'); ?>
 
 <h1>Checkout </h1>
-<?php echo validation_errors(); ?> 
+<?php echo validation_errors(); ?> 	
 
 <div class="row">
 	<div class="col-lg-6">

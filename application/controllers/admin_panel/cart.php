@@ -148,17 +148,21 @@ class Cart extends CI_Controller {
      */
     public function checkout () {
 
-        // Need cart details for cart summary
-        $this -> data['cart'] = $this -> cart -> contents();
+        if ($this -> cart-> contents() ) {
+            // Need cart details for cart summary
+            $this -> data['cart'] = $this -> cart -> contents();
 
-        // Need total amount for cart summary
-        $this -> data['total'] = $this -> cart -> format_number($this -> cart -> total());
+            // Need total amount for cart summary
+            $this -> data['total'] = $this -> cart -> format_number($this -> cart -> total());
 
-        // Need list of customers for payment
-        $this -> data['customers'] = $this -> db -> get('customer');
+            // Need list of customers for payment
+            $this -> data['customers'] = $this -> db -> get('customer');
 
 
-        $this -> load -> view('admin/checkout', $this->data);
+            $this -> load -> view('admin/checkout', $this->data);
+        } else {
+            redirect(base_url('admin/cart'));
+        }
     }
     
     /**
@@ -177,6 +181,8 @@ class Cart extends CI_Controller {
             $cashIn   = $this -> input -> post('cashIn');
             $totalAmt = $this -> cart -> format_number( $this -> cart -> total());
 
+            $cartInfo = $this -> cart -> contents();
+
             // orders data array
             $order = array(
                 'order_date'   => $orderDate, // current timestamp
@@ -188,12 +194,20 @@ class Cart extends CI_Controller {
             );
 
             // Pass in order details and cart details
-            $this -> cart_model -> recordOrder ($order, $this -> cart -> contents() );
+            $this -> cart_model -> recordOrder ($order, $cartInfo );
 
             // Destroy current cart session
             $this -> cart -> destroy();
 
-            echo "Payment Finished! Now do the receipts! ";
+            // Display order summary
+            $this -> data['cartInfo'] = $cartInfo;
+
+            // Get the name of the customer
+            $order['customer'] = $this -> db -> get_where('customer', array('id' => $order['customer_id']) )->row();
+            $this -> data['orderInfo'] = $order;
+
+            $this -> load -> view ('admin/orderSummary', $this -> data);
+
 
         } else {
 
