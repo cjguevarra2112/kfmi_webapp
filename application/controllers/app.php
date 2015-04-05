@@ -50,9 +50,9 @@ class App extends CI_Controller {
 	}
 
 	/**
-         * Checks if login credentials. If the uname/upass combination is valid,
-         * it will redirect user to the admin panel.
-         */
+     * Checks if login credentials. If the uname/upass combination is valid,
+     * it will redirect user to the admin panel.
+     */
 	public function login_validation() {
 
 		// Set up validation rules
@@ -84,9 +84,9 @@ class App extends CI_Controller {
 	}
 
 	/**
-         * Logs out the current user
-         * This will destroy all session data in the sessions db
-         */
+	 * Logs out the current user
+	 * This will destroy all session data in the sessions db
+	 */
 	public function logout() {
 		if ($this -> session -> userdata('is_logged_in')) {
 

@@ -8,11 +8,12 @@ class PurchaseLog extends CI_Controller {
             parent::__construct();
 
             // Load the app_model model
+            // Load the app_model model
             $this -> load -> model('app_model');
 
             // Load purchase log model
             $this -> load -> model('purchaselog_model');
-
+    
             // Disable browser caching
             $this -> output -> set_header("Cache-Control: no-store, no-cache, must-revalidate, no-transform, max-age=0, post-check=0, pre-check=0");
             $this -> output -> set_header("Pragma: no-cache");
@@ -29,9 +30,9 @@ class PurchaseLog extends CI_Controller {
 
 	// Display purchases in paginated form
 	//
-	public function index() {
+	public function index() {       
         if ($this -> session -> userdata('is_logged_in')) {
-            if ($this -> session -> userdata('role') == 'Admin') {
+            
 
                 $this -> load -> library('pagination');
                 $config = array (
@@ -46,9 +47,7 @@ class PurchaseLog extends CI_Controller {
                 $this -> data['query'] = $this -> purchaselog_model -> getPurchases('', $config['per_page'], $this -> uri -> segment(3));
 
                 $this -> load -> view('admin/purchaselog', $this -> data);
-            } else {
-                $this -> load -> view('other/adminonly', $this -> data);
-            }
+            
         } else { 
             redirect('app/');
         }
@@ -56,7 +55,6 @@ class PurchaseLog extends CI_Controller {
 
     public function viewSearch () {
         if ($this -> session -> userdata('is_logged_in')) {
-            if ($this -> session -> userdata('role') == 'Admin') {
                 $this -> load -> library('pagination');
 
                 $config = array (
@@ -72,11 +70,9 @@ class PurchaseLog extends CI_Controller {
 
                 $this -> data['query'] = $this -> purchaselog_model -> getPurchases($customerId, $config['per_page'], $this -> uri -> segment(3));
                 $this -> load -> view('admin/purchaselog', $this -> data);
-            } else {
-                $this -> load -> view('other/adminonly', $this -> data);
-            }
+            
         }else {
-            redirect('app/');
+            redirect('app/');     
         }
     }
 

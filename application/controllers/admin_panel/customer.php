@@ -52,10 +52,10 @@ class Customer extends CI_Controller {
             $this->load->view('admin/customer', $this->data);
         } else {
             redirect('app/');
-        }
-    }
+        }      
+    }        
 
-    public function viewSearch () {
+    public function viewSearch () {  
         if ($this -> session -> userdata('is_logged_in')) {
 
             $searchStr = $this -> input -> post('customerSearchStr');
@@ -65,7 +65,7 @@ class Customer extends CI_Controller {
             } else {
                 // pagination config
                 $config = array(
-                    'base_url'   => base_url() . 'customer/index',
+                    'base_url'   => base_url() . 'customer/index',   
                     'per_page'   => 10,
                     'num_links'  => 5,
                     'total_rows' => $this -> customer_model -> getCustomers ($searchStr, 10, $this->uri->segment(3), true)
@@ -80,7 +80,10 @@ class Customer extends CI_Controller {
             redirect('app/');
         }
     }
-
+	
+	/**
+	 * Adds a customer
+	 */
     public function addCustomer () {
         $data = array(
             'fname'        => $this -> input -> post('fname'),

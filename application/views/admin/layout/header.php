@@ -66,7 +66,7 @@
                             <a  href="<?php echo base_url('admin/cart/index'); ?>"><i class="fa fa-edit fa-3x"></i> Purchase Cart </a>
                         </li>				
 
-
+                    <!--
                         <li>
                             <a href="#"><i class="fa fa-sitemap fa-3x"></i> Multi-Level Dropdown<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
@@ -96,7 +96,7 @@
                           </li>  
                       <li  >
                             <a class="active-menu"  href="blank.html"><i class="fa fa-square-o fa-3x"></i> Blank Page</a>
-                        </li>	
+                        </li>	-->
                     </ul>
 
                 </div>

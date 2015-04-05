@@ -14,7 +14,7 @@ class Purchaselog_model extends CI_Model {
 	public function getPurchases($customer='', $per_page=15, $offset=0) {
 
 		if ($customer !== '') {
-			$this -> db -> where ('customer_id', $customer);
+                    $this -> db -> where ('customer_id', $customer);
 		}
 
 		$query = $this -> db -> get('orders', $per_page, $offset);

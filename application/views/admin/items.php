@@ -111,7 +111,7 @@
 						<tr>
 							<td><?php echo $row->id; ?>    </td>
 							<td><?php echo $row->name; ?>  </td>
-							<td><?php echo $row->price; ?> </td>
+							<td><?php echo '&#8369; ' . $this -> cart -> format_number($row->price); ?> </td>
 							<td><?php echo $row->quantity; ?></td>
 							<td><?php echo $row->category; ?></td>
 							<td>

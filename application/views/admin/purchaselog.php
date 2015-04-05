@@ -22,7 +22,7 @@
 	<table class="table table-striped table-bordered table-condensed">
 		<thead>
 			<tr>
-			
+                                <th></th>
 				<th> Order Date </th>
 				<th> Customer Name </th>
 				<th> Cash In </th>
@@ -31,12 +31,21 @@
 			</tr>
 		</thead>
 		<tbody>
+			
+			<?php
+				if (!$query) {
+			?>
 
+			<p class="bg-info"> No purchases yet. </p>
+			
+			<?php    
+				} else {   
+			?>              
 
 			<?php foreach ($query->result() as $row): ?>
 
 				<?php
-					// Getting customer full name
+					// Getting customer full name 
 					$customer     = $this -> db -> get_where('customer', array('id' => $row->customer_id ) )->row();
 					$customerName = $customer->fname . ' ' . $customer->lname;
 
@@ -46,36 +55,38 @@
 				
 					<td> <?php echo mdate('%d %F %Y @ %h:%i %a', $row->order_date );  ?>  </td>
 					<td><?php echo $customerName;  ?> </td>
-					<td><?php echo $row->cash_in; ?></td>
-					<td><?php echo $row->cash_change; ?></td>
-					<td><?php echo $row->total_amount; ?></td>
+					<td><?php echo '&#8369; ' . $this->cart->format_number($row->cash_in); ?></td>
+					<td><?php echo '&#8369; ' . $this->cart->format_number($row->cash_change); ?></td>
+					<td><?php echo '&#8369; ' . $this->cart->format_number($row->total_amount); ?></td>
 					
+                                        <!-- Modal: products list -->
+                                        <div class="modal fade" id="productsModal_<?php echo $row->id; ?>" tabindex="-1" role="dialog" ariaLabelledby="productsModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog">
+                                                        <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                                                                        <h4> Order products </h4>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                        <ul class="list-group">
+                                                                                <?php foreach ($this->purchaselog_model->getOrderProducts($row->order_key)->result() as $product): ?>
+                                                                                        <li class="list-group-item"> <?php echo $product->name . ' @ &#8369; ' . $this->cart->format_number($product->price); ?></li>
+                                                                            <?php endforeach; ?>
+                                                                        </ul>
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                                </div>
+                                                        </div>
+                                                </div>					
+                                        </div>
+                                        <!-- END Modal -->
 				</tr>
 
-				<!-- Modal: products list -->
-				<div class="modal fade" id="productsModal_<?php echo $row->id; ?>" tabindex="-1" role="dialog" ariaLablledby="productsModalLabel" aria-hidden="true">
-					<div class="modal-dialog">
-						<div class="modal-content">
-							<div class="modal-header">
-								<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-								<h4> Order products </h4>
-							</div>
-							<div class="modal-body">
-								<ul class="list-group">
-									<?php foreach ($this->purchaselog_model->getOrderProducts($row->order_key)->result() as $product): ?>
-										<li class="list-group-item"> <?php echo $product->name . ' @ ' . $product->price; ?></li>
-								    <?php endforeach; ?>
-								</ul>
-							</div>
-							<div class="modal-footer">
-								<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-							</div>
-						</div>
-					</div>					
-				</div>
-				<!-- END Modal -->
 
 			<?php endforeach; ?>
+
+			<?php } ?>
 		</tbody>
 	</table>
 
